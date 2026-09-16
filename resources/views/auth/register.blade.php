@@ -1,52 +1,98 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daftar — {{ \App\Models\Pengaturan::instance()->nama_perusahaan }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('assets/style.css') }}">
+</head>
+<body>
+
+<div class="auth-shell">
+
+  <div class="auth-illustration">
+    <div class="glow"></div>
+    <a href="{{ route('home') }}" class="brand">
+      <span class="dot-signal"></span>
+      <span>{{ \App\Models\Pengaturan::instance()->nama_perusahaan }}</span>
+    </a>
+
+    <h1>Connect Every Possibility</h1>
+    <p>Daftar sebagai karyawan untuk mengakses fitur absensi. Akun kamu perlu di-ACC admin dulu sebelum bisa login.</p>
+
+    <div class="icon-badges">
+      <div>
+        <div class="ic">⚡</div>
+        Koneksi Stabil
+      </div>
+      <div>
+        <div class="ic">📶</div>
+        Bandwidth Besar
+      </div>
+      <div>
+        <div class="ic">🎧</div>
+        Layanan Responsif
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-form-box">
+      <h2>Registration</h2>
+      <p style="margin-bottom:20px;">Enter your details to daftar</p>
+
+      @if ($errors->any())
+        <div class="admin-error">
+          @foreach ($errors->all() as $pesanError)
+            {{ $pesanError }}<br>
+          @endforeach
+        </div>
+      @endif
+
+      <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        <div class="field">
+          <label for="name">Nama</label>
+          <input type="text" id="name" name="name" value="{{ old('name') }}" required autofocus>
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" value="{{ old('email') }}" required>
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
         </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div class="field">
+          <label for="password_confirmation">Konfirmasi Password</label>
+          <input type="password" id="password_confirmation" name="password_confirmation" required>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+        <button type="submit" class="btn btn-primary btn-block">Daftar</button>
+      </form>
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+      <div class="auth-divider">ATAU</div>
+
+      <button type="button" class="btn-social" disabled title="Belum tersedia">
+        🔴 Continue with Google
+      </button>
+      <button type="button" class="btn-social" disabled title="Belum tersedia">
+        ⚫ Continue with Apple
+      </button>
+
+      <p style="text-align:center; margin-top:20px; font-size:0.9rem;">
+        Sudah punya akun? <a href="{{ route('login') }}" style="color:var(--blue); font-weight:700;">Login</a>
+      </p>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

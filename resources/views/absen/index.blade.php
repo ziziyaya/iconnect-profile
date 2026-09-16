@@ -17,13 +17,21 @@
 
       <div class="camera-box">
         <video id="video" autoplay playsinline></video>
-        <canvas id="canvas"></canvas>
+        <canvas id="canvas" style="display:none;"></canvas>
+      </div>
+
+      <div id="tombol-kamera">
+        <button type="button" class="btn btn-primary btn-block" onclick="ambilFoto()">📸 Ambil Foto</button>
+      </div>
+
+      <div id="tombol-konfirmasi" style="display:none; gap:10px;">
+        <button type="button" class="btn btn-ghost" style="flex:1;" onclick="ulangFoto()">🔄 Ulang</button>
+        <button type="button" class="btn btn-primary" style="flex:1;" onclick="konfirmasiFoto()">✅ Konfirmasi Absen Masuk</button>
       </div>
 
       <form method="POST" action="{{ route('absen.masuk') }}" id="form-absen">
         @csrf
         <input type="hidden" name="foto" id="input-foto">
-        <button type="button" class="btn btn-primary btn-block" onclick="ambilFotoDanKirim()">📸 Ambil Foto &amp; Absen Masuk</button>
       </form>
 
     @elseif ($absensiHariIni->jam_pulang == null)
@@ -34,13 +42,21 @@
 
       <div class="camera-box">
         <video id="video" autoplay playsinline></video>
-        <canvas id="canvas"></canvas>
+        <canvas id="canvas" style="display:none;"></canvas>
+      </div>
+
+      <div id="tombol-kamera">
+        <button type="button" class="btn btn-primary btn-block" onclick="ambilFoto()">📸 Ambil Foto</button>
+      </div>
+
+      <div id="tombol-konfirmasi" style="display:none; gap:10px;">
+        <button type="button" class="btn btn-ghost" style="flex:1;" onclick="ulangFoto()">🔄 Ulang</button>
+        <button type="button" class="btn btn-primary" style="flex:1;" onclick="konfirmasiFoto()">✅ Konfirmasi Absen Pulang</button>
       </div>
 
       <form method="POST" action="{{ route('absen.pulang') }}" id="form-absen">
         @csrf
         <input type="hidden" name="foto" id="input-foto">
-        <button type="button" class="btn btn-primary btn-block" onclick="ambilFotoDanKirim()">📸 Ambil Foto &amp; Absen Pulang</button>
       </form>
 
     @else
@@ -68,36 +84,55 @@
 
 @section('script')
 <script>
-  // Nyalain kamera pas halaman kebuka (kalau ada elemen video di halaman ini)
-  var videoElement = document.getElementById('video');
+  var video = document.getElementById('video');
+  var canvas = document.getElementById('canvas');
 
-  if (videoElement) {
+  // Nyalain kamera pas halaman kebuka (kalau ada elemen video di halaman ini)
+  if (video) {
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(function (stream) {
-        videoElement.srcObject = stream;
+        video.srcObject = stream;
       })
       .catch(function (error) {
         alert('Tidak bisa mengakses kamera. Pastikan kamu mengizinkan akses kamera di browser.');
       });
   }
 
-  // Ambil foto dari video yang lagi jalan, ubah jadi gambar, lalu kirim form
-  function ambilFotoDanKirim() {
-    var video = document.getElementById('video');
-    var canvas = document.getElementById('canvas');
-    var inputFoto = document.getElementById('input-foto');
-    var form = document.getElementById('form-absen');
-
+  // Tahap 1: ambil foto dari video, tampilkan sebagai preview (belum dikirim)
+  function ambilFoto() {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
     var context = canvas.getContext('2d');
+
+    // Balik gambarnya secara horizontal biar hasil fotonya tidak mirror/kebalik
+    context.translate(canvas.width, 0);
+    context.scale(-1, 1);
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    var dataUrlGambar = canvas.toDataURL('image/png');
-    inputFoto.value = dataUrlGambar;
+    // Tampilkan hasil foto (canvas), sembunyikan video yang lagi jalan
+    video.style.display = 'none';
+    canvas.style.display = 'block';
 
-    form.submit();
+    // Ganti tombol jadi "Ulang" & "Konfirmasi"
+    document.getElementById('tombol-kamera').style.display = 'none';
+    document.getElementById('tombol-konfirmasi').style.display = 'flex';
+  }
+
+  // Tahap 2 (kalau user pilih Ulang): balik lagi ke tampilan kamera hidup
+  function ulangFoto() {
+    video.style.display = 'block';
+    canvas.style.display = 'none';
+
+    document.getElementById('tombol-kamera').style.display = 'block';
+    document.getElementById('tombol-konfirmasi').style.display = 'none';
+  }
+
+  // Tahap 2 (kalau user pilih Konfirmasi): baru dikirim ke server
+  function konfirmasiFoto() {
+    var dataUrlGambar = canvas.toDataURL('image/png');
+    document.getElementById('input-foto').value = dataUrlGambar;
+    document.getElementById('form-absen').submit();
   }
 </script>
 @endsection

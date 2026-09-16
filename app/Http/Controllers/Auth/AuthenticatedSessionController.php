@@ -37,16 +37,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // Arahkan sesuai role masing-masing
-        if ($user->role == 'superadmin') {
-            return redirect()->route('admin.banners.index');
-        }
-
-        if ($user->role == 'admin') {
-            return redirect()->route('staff.persetujuan.index');
-        }
-
-        return redirect()->route('absen.index');
+        // Semua role (karyawan, admin, superadmin) landing di Beranda dulu.
+        // Dari situ mereka bisa pilih menu lain lewat sidebar sesuai hak akses masing-masing.
+        return redirect()->route('dashboard');
     }
 
     public function destroy(Request $request): RedirectResponse

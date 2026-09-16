@@ -20,49 +20,109 @@
       <span>{{ $pengaturanGlobal->nama_perusahaan }}</span>
     </a>
     <nav class="nav-links">
-      <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a>
-      <a href="{{ route('home') }}#keunggulan">Kenapa Kami</a>
-      <a href="{{ route('langganan') }}" class="{{ request()->routeIs('langganan') ? 'active' : '' }}">Berlangganan</a>
+      <a href="{{ route('home') }}" class="pill {{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a>
+      <a href="{{ route('tentang') }}" class="pill {{ request()->routeIs('tentang') ? 'active' : '' }}">Tentang Kami</a>
+      <a href="{{ route('paket') }}" class="pill {{ request()->routeIs('paket') ? 'active' : '' }}">Paket &amp; Harga</a>
+      <a href="{{ route('saran') }}" class="pill {{ request()->routeIs('saran') ? 'active' : '' }}">Saran &amp; Kritik</a>
 
       @auth
-        <details class="profile-menu">
-          <summary><x-avatar :user="auth()->user()" :size="36" /></summary>
-          <div class="profile-menu-panel">
-            <div class="profile-menu-name">{{ auth()->user()->name }}</div>
-            @if (auth()->user()->role == 'karyawan')
-              <a href="{{ route('absen.index') }}">🕒 Absen</a>
-              <a href="{{ route('absen.riwayat') }}">📋 Riwayat Absen</a>
-            @endif
-            @if (auth()->user()->role == 'admin')
-              <a href="{{ route('staff.persetujuan.index') }}">🛠️ Panel Admin</a>
-              <a href="{{ route('absen.index') }}">🕒 Absen Saya</a>
-            @endif
-            @if (auth()->user()->role == 'superadmin')
-              <a href="{{ route('admin.banners.index') }}">🛠️ Panel Superadmin</a>
-              <a href="{{ route('absen.index') }}">🕒 Absen Saya</a>
-            @endif
-            <form method="POST" action="{{ route('logout') }}">
-              @csrf
-              <button type="submit">🚪 Logout</button>
-            </form>
-          </div>
-        </details>
+        <a href="{{ auth()->user()->role == 'karyawan' ? route('dashboard') : (auth()->user()->role == 'admin' ? route('staff.persetujuan.index') : route('admin.banners.index')) }}" class="btn btn-primary" style="padding:9px 20px;">
+          🏠 Dashboard
+        </a>
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" class="btn" style="padding:9px 20px; background:var(--danger); color:#fff;">Logout</button>
+        </form>
       @else
-        <a href="{{ route('login') }}" class="btn btn-ghost" style="padding:10px 18px;">Login Karyawan</a>
+        <a href="{{ route('login') }}" class="btn btn-primary" style="padding:9px 22px;">Login</a>
       @endauth
     </nav>
     <button class="nav-toggle" aria-label="Buka menu">☰</button>
   </div>
 </header>
 
+@auth
+  <div class="subnav">
+    <div class="container subnav-inner">
+      @if (auth()->user()->role == 'karyawan')
+        <a href="{{ route('dashboard') }}" class="subnav-pill {{ request()->routeIs('dashboard') ? 'active' : '' }}">🏠 Beranda Saya</a>
+        <a href="{{ route('absen.index') }}" class="subnav-pill {{ request()->routeIs('absen.index') ? 'active' : '' }}">📷 Absensi</a>
+        <a href="{{ route('absen.riwayat') }}" class="subnav-pill {{ request()->routeIs('absen.riwayat') ? 'active' : '' }}">📅 Riwayat</a>
+        <a href="{{ route('izin.index') }}" class="subnav-pill {{ request()->routeIs('izin.*') ? 'active' : '' }}">📝 Izin</a>
+        <a href="{{ route('profil.index') }}" class="subnav-pill {{ request()->routeIs('profil.*') ? 'active' : '' }}">👤 Profil</a>
+      @endif
+      @if (auth()->user()->role == 'admin')
+        <a href="{{ route('dashboard') }}" class="subnav-pill {{ request()->routeIs('dashboard') ? 'active' : '' }}">🏠 Beranda Saya</a>
+        <a href="{{ route('staff.persetujuan.index') }}" class="subnav-pill {{ request()->routeIs('staff.persetujuan.*') ? 'active' : '' }}">✅ Persetujuan Karyawan</a>
+        <a href="{{ route('staff.izin.index') }}" class="subnav-pill {{ request()->routeIs('staff.izin.*') ? 'active' : '' }}">📝 Persetujuan Izin</a>
+        <a href="{{ route('staff.rekap.index') }}" class="subnav-pill {{ request()->routeIs('staff.rekap.*') ? 'active' : '' }}">📊 Rekap Absensi</a>
+        <a href="{{ route('absen.index') }}" class="subnav-pill {{ request()->routeIs('absen.index') ? 'active' : '' }}">📷 Absen Saya</a>
+      @endif
+      @if (auth()->user()->role == 'superadmin')
+        <a href="{{ route('dashboard') }}" class="subnav-pill {{ request()->routeIs('dashboard') ? 'active' : '' }}">🏠 Beranda Saya</a>
+        <a href="{{ route('admin.banners.index') }}" class="subnav-pill {{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">🖼️ Banner</a>
+        <a href="{{ route('admin.keunggulans.index') }}" class="subnav-pill {{ request()->routeIs('admin.keunggulans.*') ? 'active' : '' }}">⭐ Keunggulan</a>
+        <a href="{{ route('admin.testimonis.index') }}" class="subnav-pill {{ request()->routeIs('admin.testimonis.*') ? 'active' : '' }}">📸 Keseruan</a>
+        <a href="{{ route('admin.prestasis.index') }}" class="subnav-pill {{ request()->routeIs('admin.prestasis.*') ? 'active' : '' }}">🏆 Prestasi</a>
+        <a href="{{ route('admin.pakets.index') }}" class="subnav-pill {{ request()->routeIs('admin.pakets.*') ? 'active' : '' }}">📦 Paket</a>
+        <a href="{{ route('admin.pengaturan.edit') }}" class="subnav-pill {{ request()->routeIs('admin.pengaturan.*') ? 'active' : '' }}">⚙️ Pengaturan</a>
+      @endif
+    </div>
+  </div>
+@endauth
+
 <main>
   @yield('content')
 </main>
 
-<footer>
+<footer class="footer-new">
   <div class="container">
-    <span>{{ $pengaturanGlobal->nama_perusahaan }} — {{ $pengaturanGlobal->tagline }}</span>
-    <span>{{ $pengaturanGlobal->kota }}</span>
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="color:#fff; margin-bottom:12px;">
+          <span class="dot-signal"></span>
+          <span>{{ $pengaturanGlobal->nama_perusahaan }}</span>
+        </div>
+        <p>{{ $pengaturanGlobal->tagline }}</p>
+      </div>
+
+      <div>
+        <h4>Menu</h4>
+        <ul class="footer-links">
+          <li><a href="{{ route('home') }}">› Beranda</a></li>
+          <li><a href="{{ route('tentang') }}">› Tentang Kami</a></li>
+          <li><a href="{{ route('paket') }}">› Paket &amp; Harga</a></li>
+          <li><a href="{{ route('saran') }}">› Saran &amp; Kritik</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Hubungi Kami</h4>
+        <div class="footer-contact-item">📍 {{ $pengaturanGlobal->alamat }}, {{ $pengaturanGlobal->kota }}</div>
+        <div class="footer-contact-item">📞 {{ $pengaturanGlobal->no_wa_sales }}</div>
+        <div class="footer-contact-item">✉️ {{ $pengaturanGlobal->email }}</div>
+
+        <h4 style="margin-top:18px;">Social Media</h4>
+        <div class="footer-social">
+          @if ($pengaturanGlobal->instagram)
+            <a href="https://instagram.com/{{ $pengaturanGlobal->instagram }}" target="_blank" rel="noopener">📷</a>
+          @endif
+          @if ($pengaturanGlobal->twitter)
+            <a href="https://twitter.com/{{ $pengaturanGlobal->twitter }}" target="_blank" rel="noopener">🐦</a>
+          @endif
+          @if ($pengaturanGlobal->facebook)
+            <a href="https://facebook.com/{{ $pengaturanGlobal->facebook }}" target="_blank" rel="noopener">📘</a>
+          @endif
+          @if ($pengaturanGlobal->tiktok)
+            <a href="https://tiktok.com/@{{ $pengaturanGlobal->tiktok }}" target="_blank" rel="noopener">🎵</a>
+          @endif
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © {{ date('Y') }} {{ $pengaturanGlobal->nama_perusahaan }}. All rights reserved.
+    </div>
   </div>
 </footer>
 

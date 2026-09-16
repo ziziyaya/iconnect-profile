@@ -10,11 +10,18 @@ class Pengaturan extends Model
         'nama_perusahaan',
         'tagline',
         'tentang',
+        'visi',
+        'misi',
         'alamat',
         'kota',
         'no_wa_sales',
         'email',
+        'instagram',
+        'twitter',
+        'facebook',
+        'tiktok',
         'jam_operasional',
+        'jam_masuk_standar',
         'maps_embed_url',
     ];
 

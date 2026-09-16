@@ -14,6 +14,10 @@ return new class extends Migration
             // karyawan   = cuma absen
             $table->enum('role', ['superadmin', 'admin', 'karyawan'])->default('karyawan')->after('email');
 
+            // status ini yang dipakai buat approval akun karyawan baru
+            // pending  = baru daftar, belum di-ACC
+            // approved = sudah di-ACC, boleh login & absen
+            // rejected = ditolak
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending')->after('role');
         });
     }

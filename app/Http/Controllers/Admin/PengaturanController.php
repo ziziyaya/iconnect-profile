@@ -24,6 +24,10 @@ class PengaturanController extends Controller
             'kota' => 'nullable|string|max:100',
             'no_wa_sales' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:150',
+            'instagram' => 'nullable|string|max:100',
+            'twitter' => 'nullable|string|max:100',
+            'facebook' => 'nullable|string|max:100',
+            'tiktok' => 'nullable|string|max:100',
             'jam_operasional' => 'nullable|string|max:100',
             'maps_embed_url' => 'nullable|string',
         ]);
@@ -37,6 +41,10 @@ class PengaturanController extends Controller
         $pengaturan->kota = $request->kota;
         $pengaturan->no_wa_sales = $request->no_wa_sales;
         $pengaturan->email = $request->email;
+        $pengaturan->instagram = $request->instagram;
+        $pengaturan->twitter = $request->twitter;
+        $pengaturan->facebook = $request->facebook;
+        $pengaturan->tiktok = $request->tiktok;
         $pengaturan->jam_operasional = $request->jam_operasional;
         $pengaturan->maps_embed_url = $request->maps_embed_url;
         $pengaturan->save();

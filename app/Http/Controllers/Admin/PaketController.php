@@ -23,6 +23,8 @@ class PaketController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:50',
+            'kategori' => 'required|in:reguler,promo',
+            'durasi' => 'nullable|string|max:30',
             'kecepatan_mbps' => 'required|integer|min:1',
             'harga' => 'required|integer|min:0',
             'fitur' => 'nullable|string',
@@ -36,6 +38,8 @@ class PaketController extends Controller
 
         $paket = new Paket();
         $paket->nama = $request->nama;
+        $paket->kategori = $request->kategori;
+        $paket->durasi = $request->durasi;
         $paket->kecepatan_mbps = $request->kecepatan_mbps;
         $paket->harga = $request->harga;
         $paket->fitur = $this->fiturToArray($request->fitur);
@@ -58,6 +62,8 @@ class PaketController extends Controller
 
         $request->validate([
             'nama' => 'required|string|max:50',
+            'kategori' => 'required|in:reguler,promo',
+            'durasi' => 'nullable|string|max:30',
             'kecepatan_mbps' => 'required|integer|min:1',
             'harga' => 'required|integer|min:0',
             'fitur' => 'nullable|string',
@@ -70,6 +76,8 @@ class PaketController extends Controller
         }
 
         $paket->nama = $request->nama;
+        $paket->kategori = $request->kategori;
+        $paket->durasi = $request->durasi;
         $paket->kecepatan_mbps = $request->kecepatan_mbps;
         $paket->harga = $request->harga;
         $paket->fitur = $this->fiturToArray($request->fitur);

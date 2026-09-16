@@ -8,6 +8,8 @@ class Paket extends Model
 {
     protected $fillable = [
         'nama',
+        'kategori',
+        'durasi',
         'kecepatan_mbps',
         'harga',
         'fitur',

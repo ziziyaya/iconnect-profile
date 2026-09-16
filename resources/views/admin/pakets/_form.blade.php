@@ -5,6 +5,20 @@
   <input type="text" id="nama" name="nama" value="{{ old('nama', $p->nama ?? '') }}" required>
 </div>
 
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+  <div class="field">
+    <label for="kategori">Kategori</label>
+    <select id="kategori" name="kategori" required>
+      <option value="reguler" {{ old('kategori', $p->kategori ?? 'reguler') == 'reguler' ? 'selected' : '' }}>Reguler</option>
+      <option value="promo" {{ old('kategori', $p->kategori ?? '') == 'promo' ? 'selected' : '' }}>Promo</option>
+    </select>
+  </div>
+  <div class="field">
+    <label for="durasi">Durasi (khusus Promo, contoh: 3 Bulan)</label>
+    <input type="text" id="durasi" name="durasi" value="{{ old('durasi', $p->durasi ?? '') }}">
+  </div>
+</div>
+
 <div class="field">
   <label for="kecepatan_mbps">Kecepatan (Mbps)</label>
   <input type="number" id="kecepatan_mbps" name="kecepatan_mbps" value="{{ old('kecepatan_mbps', $p->kecepatan_mbps ?? '') }}" required>
