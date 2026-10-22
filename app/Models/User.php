@@ -3,13 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+<<<<<<< HEAD
 use Illuminate\Database\Eloquent\SoftDeletes;
+=======
+>>>>>>> 655aefec3182cd2b62b58e4cf428a5fa1f1a26e9
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+<<<<<<< HEAD
     use HasFactory, Notifiable, SoftDeletes;
+=======
+    use HasFactory, Notifiable;
+>>>>>>> 655aefec3182cd2b62b58e4cf428a5fa1f1a26e9
 
     protected $fillable = [
         'name',
@@ -17,11 +24,14 @@ class User extends Authenticatable
         'password',
         'role',
         'status',
+<<<<<<< HEAD
         // Data pendaftaran peserta magang (frontend ICONNET)
         'telepon',
         'jenis_kelamin',
         'sekolah',
         'alasan_penolakan',
+=======
+>>>>>>> 655aefec3182cd2b62b58e4cf428a5fa1f1a26e9
     ];
 
     protected $hidden = [
@@ -85,12 +95,15 @@ class User extends Authenticatable
         return $this->hasMany(Absensi::class);
     }
 
+<<<<<<< HEAD
     // Relasi ke pengajuan izin / sakit milik user ini
     public function izins()
     {
         return $this->hasMany(Izin::class);
     }
 
+=======
+>>>>>>> 655aefec3182cd2b62b58e4cf428a5fa1f1a26e9
     /**
      * Inisial buat avatar bulat di navbar. Contoh: "Budi Santoso" -> "BS"
      */

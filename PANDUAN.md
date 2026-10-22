@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 > **Catatan versi terintegrasi (frontend ICONNET + backend):** panduan di bawah ini adalah panduan lama yang memakai reset database.
 > Untuk menjalankan & meng-hosting project ini **tanpa menghapus data**, ikuti **[PANDUAN-INTEGRASI.md](PANDUAN-INTEGRASI.md)**.
 
+=======
+>>>>>>> 655aefec3182cd2b62b58e4cf428a5fa1f1a26e9
 # Panduan: IConnect — Absensi Karyawan + Company Profile
 
 Ini versi baru, ganti total dari versi sebelumnya (company profile doang). Sekarang ada sistem login 3 role: **Superadmin**, **Admin**, **Karyawan** — dan fitur absen pakai kamera.

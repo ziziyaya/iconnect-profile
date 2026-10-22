@@ -15,7 +15,10 @@ class Pengaturan extends Model
         'alamat',
         'kota',
         'no_wa_sales',
+<<<<<<< HEAD
         'call_center',
+=======
+>>>>>>> 655aefec3182cd2b62b58e4cf428a5fa1f1a26e9
         'email',
         'instagram',
         'twitter',

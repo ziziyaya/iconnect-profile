@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\PaketController as AdminPaketController;
 use App\Http\Controllers\Admin\PengaturanController;
 use App\Http\Controllers\Admin\PrestasiController as AdminPrestasiController;
 use App\Http\Controllers\Admin\TestimoniController;
+<<<<<<< HEAD
 use App\Http\Controllers\Iconnet\HalamanController;
 use App\Http\Controllers\IzinController;
 use App\Http\Controllers\ProfilController;
@@ -47,11 +48,48 @@ Route::middleware('auth')->group(function () {
     Route::post('/izin', [IzinController::class, 'store'])->name('izin.store');
 
     // GET /profil = halaman profil baru (didefinisikan di bawah, nama route tetap profil.index)
+=======
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IzinController;
+use App\Http\Controllers\PaketController;
+use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\SaranController;
+use App\Http\Controllers\Staff\IzinPersetujuanController;
+use App\Http\Controllers\Staff\PersetujuanController;
+use App\Http\Controllers\Staff\RekapAbsensiController;
+use App\Http\Controllers\TentangController;
+use Illuminate\Support\Facades\Route;
+
+// ================= HALAMAN PUBLIK (belum login) =================
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/tentang-kami', [TentangController::class, 'index'])->name('tentang');
+Route::get('/paket', [PaketController::class, 'index'])->name('paket');
+Route::get('/saran-kritik', [SaranController::class, 'index'])->name('saran');
+
+// ================= Halaman setelah login: Beranda karyawan/admin/superadmin =================
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/absen', [AbsensiController::class, 'index'])->name('absen.index');
+    Route::post('/absen/masuk', [AbsensiController::class, 'masuk'])->name('absen.masuk');
+    Route::post('/absen/pulang', [AbsensiController::class, 'pulang'])->name('absen.pulang');
+    Route::get('/absen/riwayat', [AbsensiController::class, 'riwayat'])->name('absen.riwayat');
+
+    Route::get('/izin', [IzinController::class, 'index'])->name('izin.index');
+    Route::post('/izin', [IzinController::class, 'store'])->name('izin.store');
+
+    Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index');
+>>>>>>> 655aefec3182cd2b62b58e4cf428a5fa1f1a26e9
     Route::put('/profil', [ProfilController::class, 'update'])->name('profil.update');
     Route::put('/profil/password', [ProfilController::class, 'updatePassword'])->name('profil.password');
 });
 
+<<<<<<< HEAD
 // ================= STAFF: admin + superadmin (panel lama: approval karyawan, izin, rekap absensi) =================
+=======
+// ================= STAFF: admin + superadmin (approval karyawan, izin, rekap absensi) =================
+>>>>>>> 655aefec3182cd2b62b58e4cf428a5fa1f1a26e9
 Route::middleware(['auth', 'staff'])->prefix('staff')->name('staff.')->group(function () {
     Route::get('persetujuan', [PersetujuanController::class, 'index'])->name('persetujuan.index');
     Route::put('persetujuan/{id}/approve', [PersetujuanController::class, 'approve'])->name('persetujuan.approve');
@@ -64,7 +102,11 @@ Route::middleware(['auth', 'staff'])->prefix('staff')->name('staff.')->group(fun
     Route::get('rekap', [RekapAbsensiController::class, 'index'])->name('rekap.index');
 });
 
+<<<<<<< HEAD
 // ================= SUPERADMIN: kelola konten situs (panel lama) =================
+=======
+// ================= SUPERADMIN: kelola konten situs =================
+>>>>>>> 655aefec3182cd2b62b58e4cf428a5fa1f1a26e9
 Route::middleware(['auth', 'superadmin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('banners', BannerController::class)->except('show');
     Route::resource('keunggulans', KeunggulanController::class)->except('show');
@@ -80,8 +122,11 @@ Route::middleware(['auth', 'superadmin'])->prefix('admin')->name('admin.')->grou
 if (file_exists(__DIR__.'/auth.php')) {
     require __DIR__.'/auth.php';
 }
+<<<<<<< HEAD
 
 // ================= FRONTEND ICONNET =================
 // Didefinisikan setelah auth.php supaya GET /login, /forgot-password, /reset-password/{token}
 // memakai halaman baru (nama route tetap: login, password.request, password.reset).
 require __DIR__.'/iconnet.php';
+=======
+>>>>>>> 655aefec3182cd2b62b58e4cf428a5fa1f1a26e9

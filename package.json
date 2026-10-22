@@ -3,9 +3,13 @@
     "private": true,
     "type": "module",
     "scripts": {
+<<<<<<< HEAD
         "build": "vite build && node tailwind/iconnet/build.cjs",
         "build:iconnet": "node tailwind/iconnet/build.cjs",
         "watch:iconnet": "node tailwind/iconnet/build.cjs --watch",
+=======
+        "build": "vite build",
+>>>>>>> 655aefec3182cd2b62b58e4cf428a5fa1f1a26e9
         "dev": "vite"
     },
     "devDependencies": {
