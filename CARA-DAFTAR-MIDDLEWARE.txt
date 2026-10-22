@@ -1,0 +1,29 @@
+Ini BUKAN file untuk ditimpa langsung — bootstrap/app.php punya isi lain yang jangan dihapus.
+Buka file iconnect-profile/bootstrap/app.php, cari bagian withMiddleware, lalu tambahkan
+alias 'superadmin' dan 'staff' seperti contoh di bawah.
+
+SEBELUM (bawaan Laravel baru):
+----------------------------------------
+->withMiddleware(function (Middleware $middleware) {
+    //
+})
+----------------------------------------
+
+SESUDAH:
+----------------------------------------
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->alias([
+        'superadmin' => \App\Http\Middleware\EnsureUserIsSuperadmin::class,
+        'staff' => \App\Http\Middleware\EnsureUserIsStaff::class,
+    ]);
+})
+----------------------------------------
+
+Kalau project Laravel kamu versinya lebih lama dan masih pakai app/Http/Kernel.php
+(bukan bootstrap/app.php), daftarkan di $middlewareAliases:
+
+    protected $middlewareAliases = [
+        ...
+        'superadmin' => \App\Http\Middleware\EnsureUserIsSuperadmin::class,
+        'staff' => \App\Http\Middleware\EnsureUserIsStaff::class,
+    ];

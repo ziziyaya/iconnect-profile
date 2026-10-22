@@ -1,0 +1,4 @@
+/* Sumber CSS Tailwind (dipakai semua config di folder ini). Hasil build ada di folder css/. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
